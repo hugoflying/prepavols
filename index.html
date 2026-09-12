@@ -1211,6 +1211,21 @@
     margin-top:14px; font-size:.92rem; font-weight:600; letter-spacing:.03em;
     color:rgba(255,255,255,.9); text-shadow:0 1px 10px rgba(0,0,0,.5);
   }
+  /* Anecdote aéro (rotation avec le fond) */
+  .home-fact{
+    margin-top:20px; max-width:440px;
+    opacity:0; transition:opacity .5s ease;
+  }
+  .home-fact.show{ opacity:1; }
+  .home-fact .hf-label{
+    display:block; font-family:"Inter", system-ui, sans-serif;
+    font-size:.56rem; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(255,255,255,.5); margin-bottom:5px;
+  }
+  .home-fact .hf-text{
+    display:block; font-size:.9rem; line-height:1.45; font-weight:500;
+    color:rgba(255,255,255,.9); text-shadow:0 1px 10px rgba(0,0,0,.55);
+  }
 
   /* Météo (AROME) : regroupée au-dessus du mot de passe */
   .home-weather{
@@ -1303,6 +1318,10 @@
     <div class="home-rule"></div>
     <div class="home-brand">PRÉPARATION<br>DES VOLS</div>
     <div class="home-date" id="homeDate"></div>
+    <div class="home-fact" id="homeFact">
+      <span class="hf-label">Le saviez-vous ?</span>
+      <span class="hf-text" id="homeFactText"></span>
+    </div>
   </div>
 
   <div class="home-content">
