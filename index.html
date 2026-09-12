@@ -1141,6 +1141,16 @@
       rgba(2,6,23,.52) 0%, rgba(2,6,23,.08) 20%, rgba(2,6,23,.10) 40%,
       rgba(2,6,23,.78) 72%, rgba(8,12,25,.985) 100%);
   }
+  /* Barre de progression du diaporama (bas d'écran) */
+  .home-slideprogress{
+    position:absolute; left:0; right:0; bottom:0; height:3px; z-index:4;
+    background:rgba(255,255,255,.12); display:none; pointer-events:none;
+  }
+  .home-slideprogress.on{ display:block; }
+  .hsp-fill{
+    height:100%; width:0%;
+    background:#2563eb; box-shadow:0 0 8px rgba(37,99,235,.6);
+  }
   .home-hero{
     position:relative; z-index:2;
     padding: max(30px, calc(env(safe-area-inset-top, 0px) + 24px)) 26px 0;
@@ -1272,6 +1282,7 @@
   <div class="home-slide" id="homeSlideA"></div>
   <div class="home-slide" id="homeSlideB"></div>
   <div class="home-scrim"></div>
+  <div class="home-slideprogress" id="homeSlideProgress"><div class="hsp-fill" id="homeSlideFill"></div></div>
 
   <div class="home-metar" id="homeMetar" style="display:none;">
     <span class="hm-label">METAR</span>
