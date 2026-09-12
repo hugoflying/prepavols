@@ -1299,7 +1299,7 @@
       <div class="hw-hours" id="homeWeatherHours" style="display:none;"></div>
     </div>
     <div class="home-login">
-      <input id="pwInput" type="password" placeholder="Mot de passe" autocomplete="current-password"
+      <input id="pwInput" type="password" placeholder="Mot de passe" autocomplete="current-password" autofocus
         onkeydown="if(event.key==='Enter') checkPW()">
       <div id="pwError"></div>
       <button type="button" onclick="checkPW()">Entrer</button>
@@ -1423,6 +1423,11 @@
   if (sessionStorage.getItem(KEY) === "1") {
     document.getElementById("pwScreen").style.display = "none";
     resetTimers();
+  } else {
+    // Écran de connexion affiché → focus auto sur le champ mot de passe
+    const focusPw = () => { const el = document.getElementById("pwInput"); if (el) el.focus(); };
+    requestAnimationFrame(focusPw);
+    setTimeout(focusPw, 120);   // renfort si le focus initial est ignoré
   }
 })();
 
