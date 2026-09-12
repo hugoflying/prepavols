@@ -2060,7 +2060,19 @@ window.clearVolCard = function(n) {
     if(!bag.length) reshuffle();
     return bag.shift();
   }
-  function next(){ show(nextSrc()); }
+  function startProgress(){
+    const bar  = document.getElementById('homeSlideProgress');
+    const fill = document.getElementById('homeSlideFill');
+    if(!bar || !fill) return;
+    if(pool.length <= 1){ bar.classList.remove('on'); return; }  // pas de barre si une seule photo
+    bar.classList.add('on');
+    fill.style.transition = 'none';
+    fill.style.width = '0%';
+    void fill.offsetWidth;                                        // force le reflow
+    fill.style.transition = 'width ' + INTERVAL + 'ms linear';
+    fill.style.width = '100%';
+  }
+  function next(){ show(nextSrc()); startProgress(); }
   function schedule(){ clearInterval(timer); if(pool.length > 1) timer = setInterval(next, INTERVAL); }
 
   window.homeKickSlideshow = function(){
