@@ -1198,6 +1198,19 @@
     box-sizing:border-box; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
   }
   .home-login input::placeholder{ color:rgba(255,255,255,.6); }
+  /* Neutralise le fond blanc opaque que Chrome applique au mot de passe enregistré (garde le rendu verre, texte blanc, centré) */
+  .home-login input:-webkit-autofill,
+  .home-login input:-webkit-autofill:hover,
+  .home-login input:-webkit-autofill:focus,
+  .home-login input:-webkit-autofill:active{
+    -webkit-text-fill-color:#fff;
+    caret-color:#fff;
+    -webkit-box-shadow:0 0 0 1000px rgba(255,255,255,.12) inset;
+    box-shadow:0 0 0 1000px rgba(255,255,255,.12) inset;
+    border:1px solid rgba(255,255,255,.28); border-radius:12px;
+    text-align:center;
+    transition:background-color 9999s ease-out 0s;
+  }
   .home-login #pwError{ color:#fca5a5; font-size:.8rem; min-height:0; }
   .home-login #pwError:empty{ display:none; }
   .home-login button{
