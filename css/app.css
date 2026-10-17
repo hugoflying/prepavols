@@ -54,7 +54,7 @@ svg.ico{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-wi
 input[type="date"].input{padding-right:8px;min-width:0}
 input[type="date"].input::-webkit-date-and-time-value{text-align:left}
 input[type="date"].input::-webkit-calendar-picker-indicator{opacity:.55}
-html:not([data-theme="light"]) input[type="date"].input::-webkit-calendar-picker-indicator{filter:invert(1)}
+html:not([data-theme="light"]) input[type="date"]::-webkit-calendar-picker-indicator{filter:none;opacity:.75}
 
 /* Libellé au-dessus d'un champ */
 .fld{display:flex;flex-direction:column;gap:4px;min-width:0}
