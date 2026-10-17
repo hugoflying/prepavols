@@ -147,7 +147,7 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
   overscroll-behavior:contain
 }
 .cvd-panel{padding:0}
-.cvd-head,.cvd-opt{display:grid;grid-template-columns:56px minmax(110px,1fr) 64px 64px 80px;gap:10px;align-items:center;padding:0 14px}
+.cvd-head,.cvd-opt{display:grid;grid-template-columns:50px 112px 48px 56px minmax(64px,1fr);gap:10px;align-items:center;padding:0 14px}
 .cvd-head{position:sticky;top:0;z-index:1;height:30px;background:var(--surface-2);border-bottom:1px solid var(--line);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .cvd-opt{min-height:54px;padding-top:7px;padding-bottom:7px;cursor:pointer;border-bottom:1px solid var(--line)}
 .cvd-opt:last-child{border-bottom:0}
@@ -158,7 +158,7 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
 .cvd-col-flt b{display:block;font-size:15px;font-weight:800}
 .cvd-col-flt small{display:block;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cvd-col-dest,.cvd-col-park{font-size:15px;font-weight:800}
-.cvd-opt-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.cvd-opt-right{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .cvd-opt-delay{font-size:12.5px;font-weight:800;color:var(--crit);font-variant-numeric:tabular-nums}
 .cvd-opt-status{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 .cvd-opt-status.is-ok{color:var(--ok)}
@@ -180,8 +180,7 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
 @media (min-width:1024px){
   .pv-pick{display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:start}
   .pv-pick .pv-flow{margin-bottom:0;height:48px}
-  /* la liste des vols prend toute la largeur de la carte */
-  .pv-pick .cvd-panel{left:-218px}
+  .pv-pick .cvd-panel{left:auto;right:0;min-width:100%;width:max-content;max-width:calc(100% + 218px)}
 }
 
 /* ---------- Blocs Arrivée / Départ / Avion ---------- */
