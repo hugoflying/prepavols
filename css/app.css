@@ -172,23 +172,44 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
 .help{font-size:12px;font-weight:600;color:var(--muted);margin-top:6px}
 .help:empty{display:none}
 
-/* ---------- Arrivée / Départ ---------- */
-.pv-legs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-.pv-leg{display:flex;flex-direction:column;gap:8px;min-width:0}
-.pv-leg-h{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:24px;flex-wrap:wrap}
-.pv-leg-t{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--fg)}
-.pv-leg-t .ico{width:15px;height:15px;color:var(--muted)}
-.pv-sched{font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;min-height:17px}
-.pv-sched:empty::before{content:"\00a0"}
+/* ---------- Choix du vol : segment + liste ---------- */
+.pv-pick .pv-flow{margin-bottom:8px}
+@media (min-width:1024px){
+  .pv-pick{display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:start}
+  .pv-pick .pv-flow{margin-bottom:0;height:48px}
+}
+
+/* ---------- Blocs Arrivée / Départ / Avion ---------- */
+.pv-grps{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+@media (min-width:560px){ .pv-grps{grid-template-columns:1fr 1fr} }
+.grp{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+.grp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:38px;padding:6px 12px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.grp-h h3{font-size:12px;font-weight:800;letter-spacing:.08em}
+.grp-s{display:flex;align-items:center;gap:6px;min-width:0}
+.pv-sched{font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.row{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-top:1px solid var(--line);cursor:text}
+.grp-h + .row{border-top:0}
+.row > span{flex:none;font-size:13.5px;font-weight:600;color:var(--muted)}
+.row .input{flex:1;min-width:0;height:42px;border:0;background:transparent;padding:0;text-align:right;font-size:15px;font-weight:700;box-shadow:none!important;border-radius:0}
+.row .input.is-big{font-size:17px;font-weight:800}
+.row .input::placeholder{font-size:13px}
+.row:focus-within{background:var(--accent-soft)}
+.row input[type="date"].input{padding:0}
+.row input[type="date"].input::-webkit-date-and-time-value{text-align:right}
+.grp-av{display:grid;grid-template-columns:1fr;margin-top:10px}
+@media (min-width:560px){
+  .grp-av{grid-template-columns:.8fr 1fr 1fr}
+  .grp-av .row{border-top:0;border-left:1px solid var(--line)}
+  .grp-av .row:first-child{border-left:0}
+}
 .tags{display:flex;flex-wrap:wrap;gap:4px}
 .tags:empty{display:none}
-.tag{display:inline-flex;align-items:center;height:22px;padding:0 7px;border-radius:4px;font-size:10.5px;font-weight:800!important;letter-spacing:.04em;white-space:nowrap;background:var(--surface-3);color:var(--muted)}
+.tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;font-size:11px;font-weight:800!important;white-space:nowrap;background:var(--surface-3);color:var(--muted);font-variant-numeric:tabular-nums}
 .tag.is-danger{background:var(--crit-soft);color:var(--crit)}
 .tag.is-warning{background:var(--warn-soft);color:var(--warn)}
 .tag.is-info{background:var(--early-soft);color:var(--early)}
 .tag.is-success{background:var(--ok-soft);color:var(--ok)}
 .tag.is-light{background:var(--surface-3);color:var(--fg)}
-.pv-acft{display:grid;grid-template-columns:.8fr 1.1fr 1fr;gap:10px;margin-top:10px}
 
 /* ---------- Documents ---------- */
 .doc-section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}

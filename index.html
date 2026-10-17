@@ -256,6 +256,7 @@
           </div>
 
           <!-- Liste AK : Départs / Arrivées -->
+          <div class="pv-pick">
           <div class="pv-flow" data-vol="1">
             <button type="button" data-flow="DEP" class="is-on"><svg class="ico"><use href="#i-dep"/></svg>Départs</button>
             <button type="button" data-flow="ARR"><svg class="ico"><use href="#i-arr"/></svg>Arrivées</button>
@@ -280,35 +281,27 @@
             </div>
             <p class="help" id="ak_status_1">—</p>
           </div>
-
-          <div class="pv-legs">
-            <div class="pv-leg">
-              <div class="pv-leg-h">
-                <h3 class="pv-leg-t"><svg class="ico"><use href="#i-arr"/></svg>ARRIVÉE</h3>
-                <div class="tags" id="arr_badges_1"></div>
-              </div>
-              <p class="pv-sched" id="sibt_display_1"></p>
-              <label class="fld"><span>Date</span><input id="arr_date_1" type="date" class="input"></label>
-              <label class="fld"><span>N° de vol</span><input id="arr_flt_1" class="input" placeholder="Flight Number" autocapitalize="characters"></label>
-              <label class="fld"><span>Provenance</span><input id="arr_from_1" class="input" placeholder="From" autocapitalize="characters"></label>
-            </div>
-
-            <div class="pv-leg">
-              <div class="pv-leg-h">
-                <h3 class="pv-leg-t"><svg class="ico"><use href="#i-dep"/></svg>DÉPART</h3>
-                <div class="tags" id="dep_badges_1"></div>
-              </div>
-              <p class="pv-sched" id="sobt_display_1"></p>
-              <label class="fld"><span>Date</span><input id="dep_date_1" type="date" class="input"></label>
-              <label class="fld"><span>N° de vol</span><input id="dep_flt_1" class="input" placeholder="Flight Number" autocapitalize="characters"></label>
-              <label class="fld"><span>Destination</span><input id="dep_to_1" class="input" placeholder="To" autocapitalize="characters"></label>
-            </div>
           </div>
 
-          <div class="pv-acft">
-            <label class="fld"><span>Parking</span><input id="parking_1" class="input" placeholder="Parking"></label>
-            <label class="fld"><span>Immat.</span><input id="dep_reg_1" class="input" placeholder="Registration" autocapitalize="characters"></label>
-            <label class="fld"><span>Type avion</span><input id="dep_type_1" class="input" placeholder="A/C Type" autocapitalize="characters"></label>
+          <!-- Blocs Arrivée / Départ / Avion -->
+          <div class="pv-grps">
+            <div class="grp">
+              <div class="grp-h"><h3>ARRIVÉE</h3><span class="grp-s"><span class="pv-sched" id="sibt_display_1"></span><span class="tags" id="arr_badges_1"></span></span></div>
+              <label class="row"><span>N° de vol</span><input id="arr_flt_1" class="input is-big" placeholder="Flight Number" autocapitalize="characters"></label>
+              <label class="row"><span>Provenance</span><input id="arr_from_1" class="input" placeholder="From" autocapitalize="characters"></label>
+              <label class="row"><span>Date</span><input id="arr_date_1" type="date" class="input"></label>
+            </div>
+            <div class="grp">
+              <div class="grp-h"><h3>DÉPART</h3><span class="grp-s"><span class="pv-sched" id="sobt_display_1"></span><span class="tags" id="dep_badges_1"></span></span></div>
+              <label class="row"><span>N° de vol</span><input id="dep_flt_1" class="input is-big" placeholder="Flight Number" autocapitalize="characters"></label>
+              <label class="row"><span>Destination</span><input id="dep_to_1" class="input" placeholder="To" autocapitalize="characters"></label>
+              <label class="row"><span>Date</span><input id="dep_date_1" type="date" class="input"></label>
+            </div>
+          </div>
+          <div class="grp grp-av">
+            <label class="row"><span>Parking</span><input id="parking_1" class="input" placeholder="Parking"></label>
+            <label class="row"><span>Immat.</span><input id="dep_reg_1" class="input" placeholder="Registration" autocapitalize="characters"></label>
+            <label class="row"><span>Type</span><input id="dep_type_1" class="input" placeholder="A/C Type" autocapitalize="characters"></label>
           </div>
           <input id="arr_reg_1" type="hidden">
           <input id="arr_type_1" type="hidden">
@@ -340,6 +333,7 @@
           </div>
 
           <!-- Liste AK : Départs / Arrivées -->
+          <div class="pv-pick">
           <div class="pv-flow" data-vol="2">
             <button type="button" data-flow="DEP" class="is-on"><svg class="ico"><use href="#i-dep"/></svg>Départs</button>
             <button type="button" data-flow="ARR"><svg class="ico"><use href="#i-arr"/></svg>Arrivées</button>
@@ -364,35 +358,27 @@
             </div>
             <p class="help" id="ak_status_2">—</p>
           </div>
-
-          <div class="pv-legs">
-            <div class="pv-leg">
-              <div class="pv-leg-h">
-                <h3 class="pv-leg-t"><svg class="ico"><use href="#i-arr"/></svg>ARRIVÉE</h3>
-                <div class="tags" id="arr_badges_2"></div>
-              </div>
-              <p class="pv-sched" id="sibt_display_2"></p>
-              <label class="fld"><span>Date</span><input id="arr_date_2" type="date" class="input"></label>
-              <label class="fld"><span>N° de vol</span><input id="arr_flt_2" class="input" placeholder="Flight Number" autocapitalize="characters"></label>
-              <label class="fld"><span>Provenance</span><input id="arr_from_2" class="input" placeholder="From" autocapitalize="characters"></label>
-            </div>
-
-            <div class="pv-leg">
-              <div class="pv-leg-h">
-                <h3 class="pv-leg-t"><svg class="ico"><use href="#i-dep"/></svg>DÉPART</h3>
-                <div class="tags" id="dep_badges_2"></div>
-              </div>
-              <p class="pv-sched" id="sobt_display_2"></p>
-              <label class="fld"><span>Date</span><input id="dep_date_2" type="date" class="input"></label>
-              <label class="fld"><span>N° de vol</span><input id="dep_flt_2" class="input" placeholder="Flight Number" autocapitalize="characters"></label>
-              <label class="fld"><span>Destination</span><input id="dep_to_2" class="input" placeholder="To" autocapitalize="characters"></label>
-            </div>
           </div>
 
-          <div class="pv-acft">
-            <label class="fld"><span>Parking</span><input id="parking_2" class="input" placeholder="Parking"></label>
-            <label class="fld"><span>Immat.</span><input id="dep_reg_2" class="input" placeholder="Registration" autocapitalize="characters"></label>
-            <label class="fld"><span>Type avion</span><input id="dep_type_2" class="input" placeholder="A/C Type" autocapitalize="characters"></label>
+          <!-- Blocs Arrivée / Départ / Avion -->
+          <div class="pv-grps">
+            <div class="grp">
+              <div class="grp-h"><h3>ARRIVÉE</h3><span class="grp-s"><span class="pv-sched" id="sibt_display_2"></span><span class="tags" id="arr_badges_2"></span></span></div>
+              <label class="row"><span>N° de vol</span><input id="arr_flt_2" class="input is-big" placeholder="Flight Number" autocapitalize="characters"></label>
+              <label class="row"><span>Provenance</span><input id="arr_from_2" class="input" placeholder="From" autocapitalize="characters"></label>
+              <label class="row"><span>Date</span><input id="arr_date_2" type="date" class="input"></label>
+            </div>
+            <div class="grp">
+              <div class="grp-h"><h3>DÉPART</h3><span class="grp-s"><span class="pv-sched" id="sobt_display_2"></span><span class="tags" id="dep_badges_2"></span></span></div>
+              <label class="row"><span>N° de vol</span><input id="dep_flt_2" class="input is-big" placeholder="Flight Number" autocapitalize="characters"></label>
+              <label class="row"><span>Destination</span><input id="dep_to_2" class="input" placeholder="To" autocapitalize="characters"></label>
+              <label class="row"><span>Date</span><input id="dep_date_2" type="date" class="input"></label>
+            </div>
+          </div>
+          <div class="grp grp-av">
+            <label class="row"><span>Parking</span><input id="parking_2" class="input" placeholder="Parking"></label>
+            <label class="row"><span>Immat.</span><input id="dep_reg_2" class="input" placeholder="Registration" autocapitalize="characters"></label>
+            <label class="row"><span>Type</span><input id="dep_type_2" class="input" placeholder="A/C Type" autocapitalize="characters"></label>
           </div>
           <input id="arr_reg_2" type="hidden">
           <input id="arr_type_2" type="hidden">
@@ -1229,6 +1215,18 @@ window.addEventListener('resize', function() {
       if(el.textContent !== txt) el.textContent = txt;
     });
   }
+  // Badges retard : « RETARDÉ +14 » devient « +14 », « À L'HEURE » devient « à l'heure »
+  function shortTags(){
+    document.querySelectorAll('.grp-h .tag').forEach(function(t){
+      var raw = t.textContent, m = raw.match(/([+-]\s?\d+)/);
+      var txt = m ? m[1].replace(/\s/g,'').replace('-', '−') : (/HEURE/i.test(raw) ? 'à l’heure' : raw);
+      if(txt !== raw) t.textContent = txt;
+    });
+  }
+  document.querySelectorAll('.grp-h .tags').forEach(function(el){
+    new MutationObserver(shortTags).observe(el, { childList: true });
+  });
+
   ['input','change'].forEach(function(ev){ document.addEventListener(ev, syncTabs, true); });
   document.addEventListener('click', function(){ setTimeout(syncTabs, 60); }, true);
   syncTabs();
