@@ -376,3 +376,11 @@ html:not([data-theme="light"]) .pv-hold-row input[type=checkbox]{accent-color:va
 @media (max-width:520px){ .home-metar{position:static;align-self:stretch;max-width:none;width:auto;margin:12px 14px 0;font-size:.74rem} }
 
 @media (prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important} }
+
+/* ---------- Zoom PC : 100 % rend comme l'ancien 110 % (Hugo) ---------- */
+@media (min-width:1024px){
+  html{zoom:1.1}
+  body{min-height:calc(100vh / 1.1)}
+  .pv-card{max-height:calc(100vh / 1.1 - 32px)}
+  .cvd-panel{max-height:min(56vh,420px)}
+}
