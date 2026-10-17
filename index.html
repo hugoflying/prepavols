@@ -664,10 +664,10 @@
     <div class="pv-body">
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
         <button class="pv-action-btn" type="button" onclick="submitPrestaBaseModal('ARR')">
-          🛬 Retour basé
+          <svg class="ico"><use href="#i-arr"/></svg>Retour basé
         </button>
         <button class="pv-action-btn" type="button" onclick="submitPrestaBaseModal('DEP')">
-          ✈️ Départ basé
+          <svg class="ico"><use href="#i-dep"/></svg>Départ basé
         </button>
       </div>
     </div>
@@ -1232,6 +1232,90 @@ window.addEventListener('resize', function() {
   document.querySelectorAll('.grp-h .tags').forEach(function(el){
     new MutationObserver(shortTags).observe(el, { childList: true });
   });
+
+  // ===== Fenêtres d'impression : bandeau marine avec le vol, boutons − / +, compartiments =====
+  var lastVol = '1';
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('button[data-doc]');
+    if(b) lastVol = b.dataset.vol || '1';
+  }, true);
+  function volLine(n){
+    var f = v('dep_flt_' + n) || v('arr_flt_' + n);
+    var to = v('dep_to_' + n), ty = v('dep_type_' + n);
+    if(!f) return 'Vol ' + n;
+    return 'Vol ' + n + ' · ' + f + (to ? ' → ' + to : '') + (ty ? ' · ' + ty : '');
+  }
+  function bothLine(){
+    var a = v('dep_flt_1') || v('arr_flt_1'), b = v('dep_flt_2') || v('arr_flt_2');
+    return [a ? 'Vol 1 · ' + a : '', b ? 'Vol 2 · ' + b : ''].filter(Boolean).join('   |   ') || 'Vol 1 et Vol 2';
+  }
+  function refreshDialog(m){
+    var sub = m.querySelector('.pv-sub');
+    if(sub) sub.textContent = (lastVol === 'both' || m.id === 'menageModal' || m.id === 'holdModal') ? bothLine() : volLine(lastVol);
+    [1,2].forEach(function(n){
+      var t = document.querySelector('#menageCol' + n + ' .pv-vol-col-title');
+      var f = v('dep_flt_' + n) || v('arr_flt_' + n);
+      if(t) t.textContent = 'VOL ' + n + (f ? ' · ' + f : '');
+    });
+    syncComp();
+  }
+  document.querySelectorAll('.pv-card').forEach(function(card){
+    var h = card.querySelector('.pv-header');
+    if(h && !h.querySelector('.pv-sub')){
+      var t = h.querySelector('.pv-header-title');
+      var wrap = document.createElement('div'); wrap.className = 'pv-header-txt';
+      var sub = document.createElement('span'); sub.className = 'pv-sub';
+      if(t){ h.insertBefore(wrap, t); wrap.appendChild(t); }
+      wrap.appendChild(sub);
+    }
+    var m = card.closest('[id$="Modal"]');
+    if(m) new MutationObserver(function(){ if(m.style.display !== 'none') refreshDialog(m); })
+      .observe(m, { attributes: true, attributeFilter: ['style'] });
+  });
+
+  // Boutons − / + autour des champs numériques (poussettes, numéro de bingo)
+  ['siModalPoussettesPorte','siModalPoussettesCBS','laudaModalPoussettesPorte','laudaModalPoussettesCBS','bbcgBingoCard','bbcgBingoOf'].forEach(function(id){
+    var inp = document.getElementById(id);
+    if(!inp || inp.closest('.pv-step')) return;
+    var w = document.createElement('span'); w.className = 'pv-step';
+    inp.parentNode.insertBefore(w, inp);
+    var minus = document.createElement('button'); minus.type = 'button'; minus.textContent = '−'; minus.setAttribute('aria-label', 'Moins');
+    var plus  = document.createElement('button'); plus.type  = 'button'; plus.textContent  = '+'; plus.setAttribute('aria-label', 'Plus');
+    w.appendChild(minus); w.appendChild(inp); w.appendChild(plus);
+    var min = /^bbcg/.test(id) ? 1 : 0;
+    function bump(d){
+      if(inp.disabled) return;
+      var cur = parseInt(inp.value, 10);
+      var nv = isNaN(cur) ? (d > 0 ? Math.max(min, 1) : '') : Math.max(min, cur + d);
+      if(nv === 0 && min === 0) nv = '';
+      inp.value = String(nv);
+      inp.dispatchEvent(new Event('input', { bubbles: true }));
+      inp.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    minus.addEventListener('click', function(){ bump(-1); });
+    plus.addEventListener('click', function(){ bump(1); });
+  });
+
+  // Compartiment de chargement : boutons à la place de la liste
+  var comp = document.getElementById('bbcgComp');
+  var compChips = null;
+  function syncComp(){
+    if(!comp || !compChips) return;
+    compChips.querySelectorAll('button').forEach(function(b){ b.classList.toggle('is-on', b.dataset.v === comp.value); });
+  }
+  if(comp){
+    compChips = document.createElement('div'); compChips.className = 'pv-chips';
+    Array.from(comp.options).forEach(function(o){
+      var b = document.createElement('button'); b.type = 'button'; b.dataset.v = o.value; b.textContent = o.textContent;
+      b.addEventListener('click', function(){ comp.value = o.value; comp.dispatchEvent(new Event('change', { bubbles: true })); syncComp(); });
+      compChips.appendChild(b);
+    });
+    var wrapSel = comp.closest('.select') || comp;
+    wrapSel.style.display = 'none';
+    wrapSel.parentNode.insertBefore(compChips, wrapSel);
+    comp.addEventListener('change', syncComp);
+    syncComp();
+  }
 
   ['input','change'].forEach(function(ev){ document.addEventListener(ev, syncTabs, true); });
   document.addEventListener('click', function(){ setTimeout(syncTabs, 60); }, true);
