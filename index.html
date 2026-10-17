@@ -809,19 +809,25 @@
     return (document.getElementById('ak_flow_' + n)?.value || 'DEP');
   }
 
-  function buildOptHTML(icon, parts, status, delay){
+  // Type avion du vol AK (le libellé de l'option ne le contient pas)
+  function acTypeOf(id, flow){
+    const list = flow === 'DEP' ? (window._akDepToday || []) : (window._akArrToday || []);
+    const f = list.find(x => String(x?.id ?? '') === String(id));
+    return String(f?.acTypeIcao || f?.acTypeIata || f?.aircraftDetails?.acTypeName || '').toUpperCase().trim();
+  }
+
+  function buildOptHTML(icon, parts, status, delay, type){
     const [t, flt, dest, reg, park] = parts;
-    const arrow = (icon === SVG_ARR) ? '←' : '→';
     const delayHtml = (delay > 15) ? `<span class="cvd-opt-delay">+${delay}</span>` : '';
     const statusHtml = status === 'ARRIVÉ'  ? '<span class="cvd-opt-status is-ok">Au sol</span>'
                      : status === 'DÉCOLLÉ' ? '<span class="cvd-opt-status">Décollé</span>'
                      : '';
-    const sub = [reg === '-----' ? '' : reg, park].filter(Boolean).join(' · ');
-    return `<span class="cvd-opt-time"><span class="cvd-col-time">${t || ''}</span>${delayHtml}</span>
-    <span class="cvd-opt-label">
-      <span class="cvd-opt-main"><span class="cvd-col-flt">${flt || ''}</span> <i>${arrow}</i> <span class="cvd-col-dest">${dest || ''}</span></span>
-      <span class="cvd-opt-sub">${sub}</span>
-    </span><span class="cvd-opt-right">${statusHtml}</span>`;
+    const sub = [reg === '-----' ? '' : reg, type].filter(Boolean).join(' · ');
+    return `<span class="cvd-col-time">${t || ''}</span>
+    <span class="cvd-col-flt"><b>${flt || ''}</b><small>${sub}</small></span>
+    <b class="cvd-col-dest">${dest || ''}</b>
+    <b class="cvd-col-park">${park || ''}</b>
+    <span class="cvd-opt-right">${delayHtml}${statusHtml}</span>`;
   }
 
   function openPanel(n){
@@ -886,7 +892,7 @@
       return;
     }
 
-    panel.innerHTML = '';
+    panel.innerHTML = `<div class="cvd-head"><span>Heure</span><span>Vol</span><span>${flow === 'DEP' ? 'Dest.' : 'Prov.'}</span><span>Parking</span><span></span></div>`;
     opts.forEach(opt => {
       if(!opt.value) return; // skip placeholder
       // Extract status from label (after " — ")
@@ -902,7 +908,7 @@
       div.setAttribute('role', 'option');
       const parts = label.split('  ·  ');
       const delay = parseInt(opt.dataset.delay) || 0;
-      div.innerHTML = buildOptHTML(icon, parts, status, delay);
+      div.innerHTML = buildOptHTML(icon, parts, status, delay, acTypeOf(opt.value, flow));
       div.addEventListener('click', () => selectOpt(n, opt.value, label, flow));
       panel.appendChild(div);
     });

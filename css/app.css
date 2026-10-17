@@ -147,26 +147,29 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
   overscroll-behavior:contain
 }
 .cvd-panel{padding:0}
-.cvd-opt{display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--line)}
+.cvd-head,.cvd-opt{display:grid;grid-template-columns:56px minmax(110px,1fr) 64px 64px 80px;gap:10px;align-items:center;padding:0 14px}
+.cvd-head{position:sticky;top:0;z-index:1;height:30px;background:var(--surface-2);border-bottom:1px solid var(--line);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cvd-opt{min-height:54px;padding-top:7px;padding-bottom:7px;cursor:pointer;border-bottom:1px solid var(--line)}
 .cvd-opt:last-child{border-bottom:0}
 .cvd-opt:active,.cvd-opt:hover{background:var(--surface-2)}
 .cvd-opt.selected{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--yellow)}
-.cvd-opt-time{display:flex;flex-direction:column;line-height:1.15}
-.cvd-col-time{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
-.cvd-opt-delay{font-size:12px;font-weight:800;color:var(--crit);font-variant-numeric:tabular-nums}
-.cvd-opt-label{min-width:0;display:flex;flex-direction:column;gap:1px}
-.cvd-opt-main{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cvd-opt-main i{font-style:normal;font-weight:500;color:var(--faint)}
-.cvd-opt-sub{font-size:12.5px;font-weight:600;color:var(--muted)}
-.cvd-opt-sub:empty{display:none}
-.cvd-opt-right{display:flex;align-items:center}
+.cvd-col-time{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.cvd-col-flt{min-width:0}
+.cvd-col-flt b{display:block;font-size:15px;font-weight:800}
+.cvd-col-flt small{display:block;font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cvd-col-dest,.cvd-col-park{font-size:15px;font-weight:800}
+.cvd-opt-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.cvd-opt-delay{font-size:12.5px;font-weight:800;color:var(--crit);font-variant-numeric:tabular-nums}
 .cvd-opt-status{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap}
 .cvd-opt-status.is-ok{color:var(--ok)}
 .cvd-opt-status.is-ok::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:5px;vertical-align:1px}
 .cvd-opt-departed{opacity:.45}
-/* liste générique (une seule étiquette, sans heure) */
-.cvd-opt:not(:has(.cvd-opt-time)){display:flex}
-.cvd-opt:not(:has(.cvd-opt-time)) .cvd-opt-label{font-weight:700}
+@media (max-width:520px){
+  .cvd-head,.cvd-opt{grid-template-columns:48px minmax(0,1fr) 44px 40px 54px;gap:8px;padding-left:10px;padding-right:10px}
+}
+/* liste générique (une seule étiquette, sans colonnes) */
+.cvd-opt:not(:has(.cvd-col-time)){display:flex;min-height:44px}
+.cvd-opt:not(:has(.cvd-col-time)) .cvd-opt-label{font-weight:700}
 .cvd-empty{padding:16px;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
 
 .help{font-size:12px;font-weight:600;color:var(--muted);margin-top:6px}
@@ -177,6 +180,8 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
 @media (min-width:1024px){
   .pv-pick{display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:start}
   .pv-pick .pv-flow{margin-bottom:0;height:48px}
+  /* la liste des vols prend toute la largeur de la carte */
+  .pv-pick .cvd-panel{left:-218px}
 }
 
 /* ---------- Blocs Arrivée / Départ / Avion ---------- */
