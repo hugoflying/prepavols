@@ -825,22 +825,17 @@
 
   function buildOptHTML(icon, parts, status, delay){
     const [t, flt, dest, reg, park] = parts;
-    const statusHtml = status
-      ? `<span class="cvd-opt-status">${status}</span>`
-      : '';
-    const delayHtml = (delay > 15)
-      ? `<span class="cvd-opt-delay">RETARDÉ</span>`
-      : '';
-    return `<span class="cvd-opt-label">
-      <span class="cvd-col-time">${t  || ''}</span>
-      <span class="cvd-col-flt" >${flt  || ''}</span>
-      <span class="cvd-col-dest">${dest || ''}</span>
-      <span class="cvd-col-reg" >${reg  || ''}</span>
-      <span class="cvd-col-park">${park || ''}</span>
-    </span><span class="cvd-opt-right">
-      <span class="cvd-opt-delay-slot">${delayHtml}</span>
-      <span class="cvd-opt-status-slot">${statusHtml}</span>
-    </span>`;
+    const arrow = (icon === SVG_ARR) ? '←' : '→';
+    const delayHtml = (delay > 15) ? `<span class="cvd-opt-delay">+${delay}</span>` : '';
+    const statusHtml = status === 'ARRIVÉ'  ? '<span class="cvd-opt-status is-ok">Au sol</span>'
+                     : status === 'DÉCOLLÉ' ? '<span class="cvd-opt-status">Décollé</span>'
+                     : '';
+    const sub = [reg === '-----' ? '' : reg, park].filter(Boolean).join(' · ');
+    return `<span class="cvd-opt-time"><span class="cvd-col-time">${t || ''}</span>${delayHtml}</span>
+    <span class="cvd-opt-label">
+      <span class="cvd-opt-main"><span class="cvd-col-flt">${flt || ''}</span> <i>${arrow}</i> <span class="cvd-col-dest">${dest || ''}</span></span>
+      <span class="cvd-opt-sub">${sub}</span>
+    </span><span class="cvd-opt-right">${statusHtml}</span>`;
   }
 
   function openPanel(n){
