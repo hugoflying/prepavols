@@ -179,7 +179,8 @@ html:not([data-theme="light"]) .pv-flow button.is-on{background:var(--surface-2)
 .pv-pick .pv-flow{margin-bottom:8px}
 @media (min-width:1024px){
   .pv-pick{display:grid;grid-template-columns:210px 1fr;gap:8px;align-items:start}
-  .pv-pick .pv-flow{margin-bottom:0;height:48px}
+  .pv-pick .pv-flow{margin-bottom:0;height:48px;box-sizing:border-box}
+  .pv-pick .pv-flow button{height:100%}
   .pv-pick .cvd-panel{left:auto;right:0;min-width:100%;width:max-content;max-width:calc(100% + 218px)}
 }
 
