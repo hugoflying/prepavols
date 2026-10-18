@@ -824,11 +824,16 @@
     return (Number.isFinite(a) && Number.isFinite(b)) ? Math.round((b - a) / 60000) : 0;
   }
   const EARLY_MIN = 10; // avance signalée à partir de 10 min
+  // retard/avance arrondi aux 5 min, en h + min au-delà de 60 (ex. 155 → 2h35)
+  window.fmtDelay = function(m){
+    const r = Math.round(Math.abs(m) / 5) * 5;
+    return r >= 60 ? Math.floor(r / 60) + 'h' + String(r % 60).padStart(2, '0') : String(r);
+  };
 
   function buildOptHTML(icon, parts, status, delay, type, diff){
     const [t, flt, dest, reg, park] = parts;
-    const timing = (delay > 15) ? `<span class="cvd-opt-delay">Retard +${delay}</span>`
-                 : (diff <= -EARLY_MIN) ? `<span class="cvd-opt-early">Avance −${-diff}</span>`
+    const timing = (delay > 15) ? `<span class="cvd-opt-delay">Retard +${fmtDelay(delay)}</span>`
+                 : (diff <= -EARLY_MIN) ? `<span class="cvd-opt-early">Avance −${fmtDelay(diff)}</span>`
                  : '';
     const main = status === 'ARRIVÉ'  ? '<span class="cvd-opt-status is-ok">Au sol</span>'
                : status === 'DÉCOLLÉ' ? '<span class="cvd-opt-status">Décollé</span>'
@@ -1238,7 +1243,8 @@ window.addEventListener('resize', function() {
   function shortTags(){
     document.querySelectorAll('.grp-h .tag').forEach(function(t){
       var raw = t.textContent, m = raw.match(/([+-]\s?\d+)/);
-      var txt = m ? m[1].replace(/\s/g,'').replace('-', '−') : (/HEURE/i.test(raw) ? 'à l’heure' : raw);
+      var n = m ? parseInt(m[1].replace(/\s/g,''), 10) : NaN;
+      var txt = m ? (n < 0 ? '−' : '+') + window.fmtDelay(n) : (/HEURE/i.test(raw) ? 'à l’heure' : raw);
       if(txt !== raw) t.textContent = txt;
     });
   }
