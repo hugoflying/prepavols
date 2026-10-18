@@ -398,3 +398,6 @@ html:not([data-theme="light"]) .cvd-btn{background:#0C1430}
 .cvd-opt-early{font-size:12.5px;font-weight:800;color:var(--early);font-variant-numeric:tabular-nums;white-space:nowrap}
 .cvd-opt-delay{white-space:nowrap}
 .cvd-opt-status.is-planned{color:var(--muted)}
+
+/* ---------- Bouton désactivé (Prestations basé, Hugo 2026-10-18) ---------- */
+.btn-band:disabled{opacity:.45;cursor:not-allowed;pointer-events:none;filter:grayscale(1)}
