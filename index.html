@@ -824,10 +824,10 @@
     return (Number.isFinite(a) && Number.isFinite(b)) ? Math.round((b - a) / 60000) : 0;
   }
   const EARLY_MIN = 10; // avance signalée à partir de 10 min
-  // retard/avance arrondi aux 5 min, en h + min au-delà de 60 (ex. 155 → 2h35)
+  // retard/avance arrondi aux 5 min, en h + min au-delà de 60, suivi de ′ (ex. 55 → 55′, 155 → 2h35′)
   window.fmtDelay = function(m){
     const r = Math.round(Math.abs(m) / 5) * 5;
-    return r >= 60 ? Math.floor(r / 60) + 'h' + String(r % 60).padStart(2, '0') : String(r);
+    return (r >= 60 ? Math.floor(r / 60) + 'h' + String(r % 60).padStart(2, '0') : String(r)) + '′';
   };
 
   function buildOptHTML(icon, parts, status, delay, type, diff){
