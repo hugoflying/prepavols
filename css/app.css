@@ -393,3 +393,8 @@ html:not([data-theme="light"]) .grp-h,html:not([data-theme="light"]) .btn-band{b
 html:not([data-theme="light"]) .pv-flow{background:#0A1126}
 html:not([data-theme="light"]) .pv-flow button.is-on{background:#24345E;color:#fff;box-shadow:none}
 html:not([data-theme="light"]) .cvd-btn{background:#0C1430}
+
+/* ---------- Liste des vols : statut toujours affiché (Hugo) ---------- */
+.cvd-opt-early{font-size:12.5px;font-weight:800;color:var(--early);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cvd-opt-delay{white-space:nowrap}
+.cvd-opt-status.is-planned{color:var(--muted)}

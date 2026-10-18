@@ -816,12 +816,25 @@
     return String(f?.acTypeIcao || f?.acTypeIata || f?.aircraftDetails?.acTypeName || '').toUpperCase().trim();
   }
 
-  function buildOptHTML(icon, parts, status, delay, type){
+  // écart prévu (min) : EOBT−SOBT au départ, EIBT−SIBT à l'arrivée ; négatif = en avance
+  function diffOf(id, flow){
+    const list = flow === 'DEP' ? (window._akDepToday || []) : (window._akArrToday || []);
+    const f = list.find(x => String(x?.id ?? '') === String(id));
+    const a = Date.parse(flow === 'DEP' ? f?.sobt : f?.sibt), b = Date.parse(flow === 'DEP' ? f?.eobt : f?.eibt);
+    return (Number.isFinite(a) && Number.isFinite(b)) ? Math.round((b - a) / 60000) : 0;
+  }
+  const EARLY_MIN = 10; // avance signalée à partir de 10 min
+
+  function buildOptHTML(icon, parts, status, delay, type, diff){
     const [t, flt, dest, reg, park] = parts;
-    const delayHtml = (delay > 15) ? `<span class="cvd-opt-delay">+${delay}</span>` : '';
-    const statusHtml = status === 'ARRIVÉ'  ? '<span class="cvd-opt-status is-ok">Au sol</span>'
-                     : status === 'DÉCOLLÉ' ? '<span class="cvd-opt-status">Décollé</span>'
-                     : '';
+    const timing = (delay > 15) ? `<span class="cvd-opt-delay">Retard +${delay}</span>`
+                 : (diff <= -EARLY_MIN) ? `<span class="cvd-opt-early">Avance −${-diff}</span>`
+                 : '';
+    const main = status === 'ARRIVÉ'  ? '<span class="cvd-opt-status is-ok">Au sol</span>'
+               : status === 'DÉCOLLÉ' ? '<span class="cvd-opt-status">Décollé</span>'
+               : '';
+    const delayHtml = timing;
+    const statusHtml = main || (timing ? '' : '<span class="cvd-opt-status is-planned">Prévu</span>');
     const sub = [reg === '-----' ? '' : reg, type].filter(Boolean).join(' · ');
     return `<span class="cvd-col-time">${t || ''}</span>
     <span class="cvd-col-flt"><b>${flt || ''}</b><small>${sub}</small></span>
@@ -892,7 +905,7 @@
       return;
     }
 
-    panel.innerHTML = `<div class="cvd-head"><span>Heure</span><span>Vol</span><span>${flow === 'DEP' ? 'Dest.' : 'Prov.'}</span><span>Parking</span><span></span></div>`;
+    panel.innerHTML = `<div class="cvd-head"><span>Heure</span><span>Vol</span><span>${flow === 'DEP' ? 'Dest.' : 'Prov.'}</span><span>Parking</span><span>Statut</span></div>`;
     opts.forEach(opt => {
       if(!opt.value) return; // skip placeholder
       // Extract status from label (after " — ")
@@ -908,7 +921,7 @@
       div.setAttribute('role', 'option');
       const parts = label.split('  ·  ');
       const delay = parseInt(opt.dataset.delay) || 0;
-      div.innerHTML = buildOptHTML(icon, parts, status, delay, acTypeOf(opt.value, flow));
+      div.innerHTML = buildOptHTML(icon, parts, status, delay, acTypeOf(opt.value, flow), diffOf(opt.value, flow));
       div.addEventListener('click', () => selectOpt(n, opt.value, label, flow));
       panel.appendChild(div);
     });
