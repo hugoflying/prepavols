@@ -37,8 +37,9 @@ function getVol(n){
   };
 }
 
+// Les dates sont pré-remplies avec aujourd'hui : elles ne suffisent pas à rendre un vol "utilisé"
 function isVolEmpty(v){
-  return !v.arr.date&&!v.arr.flt&&!v.dep.date&&!v.dep.flt;
+  return !v.arr.flt&&!v.dep.flt&&!v.arr.reg&&!v.dep.reg&&!v.arr.from&&!v.dep.to;
 }
 
 function parking(n){ return document.getElementById(`parking_${n}`)?.value||"" }
