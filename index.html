@@ -1340,9 +1340,9 @@ window.addEventListener('resize', function() {
   document.addEventListener('click', function(){ setTimeout(syncTabs, 60); }, true);
   syncTabs();
 
-  // ===== Documents par compagnie (Hugo) : LIR = FR/RK uniquement, BBCG/Walkaround/RTB = W4/W6 uniquement =====
+  // ===== Documents par compagnie (Hugo) : LIR et Bingo = FR/RK uniquement, BBCG/Walkaround/RTB = W4/W6 uniquement =====
   // Code compagnie = 2 premiers caractères du n° de vol départ (sinon arrivée). Autre compagnie ou vide : tout reste actif.
-  var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
+  var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BINGO_FR:['FR','RK'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
   var CIE_GROUPS = [['FR','RK'], ['W4','W6']];
   function gateDocs(){
     ['1','2'].forEach(function(n){
