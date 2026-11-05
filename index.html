@@ -1339,6 +1339,31 @@ window.addEventListener('resize', function() {
   ['input','change'].forEach(function(ev){ document.addEventListener(ev, syncTabs, true); });
   document.addEventListener('click', function(){ setTimeout(syncTabs, 60); }, true);
   syncTabs();
+
+  // ===== Documents par compagnie (Hugo) : LIR = FR/RK uniquement, BBCG/Walkaround/RTB = W4/W6 uniquement =====
+  // Code compagnie = 2 premiers caractères du n° de vol départ (sinon arrivée). Autre compagnie ou vide : tout reste actif.
+  var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
+  var CIE_GROUPS = [['FR','RK'], ['W4','W6']];
+  function gateDocs(){
+    ['1','2'].forEach(function(n){
+      var cie = (v('dep_flt_' + n) || v('arr_flt_' + n)).toUpperCase().replace(/\s/g,'').slice(0, 2);
+      var known = CIE_GROUPS.some(function(g){ return g.indexOf(cie) >= 0; });
+      document.querySelectorAll('button[data-doc][data-vol="' + n + '"]').forEach(function(b){
+        var only = DOC_CIES[b.dataset.doc];
+        if(!only) return;
+        var off = known && only.indexOf(cie) < 0;
+        if(off === b.disabled) return;
+        b.disabled = off;
+        if(!b.dataset.label) b.dataset.label = b.textContent.trim();
+        if(off) b.innerHTML = '<span>' + b.dataset.label + '<small>' + only.join('/') + ' uniquement</small></span>';
+        else b.textContent = b.dataset.label;
+      });
+    });
+  }
+  ['input','change'].forEach(function(ev){ document.addEventListener(ev, gateDocs, true); });
+  document.addEventListener('click', function(){ setTimeout(gateDocs, 60); }, true);
+  setInterval(gateDocs, 1000); // les champs sont aussi remplis par le script AK sans événement
+  gateDocs();
 })();
 </script>
 
