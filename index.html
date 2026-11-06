@@ -1345,6 +1345,7 @@ window.addEventListener('resize', function() {
   var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BINGO_FR:['FR','RK','V7','H4'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
   var CIE_KNOWN = ['FR','RK','W4','W6','V7','H4'];
   var DOC_TYPES = { LIR_LAUDA:['A320'] }; // type avion requis ; type vide = pas de blocage
+  var DOC_CIE_NOTES = { BINGO_FR:'Hors W4/W6' }; // libellé choisi par Hugo
   var DOC_NOT_TYPES = { LIR_RYANAIR:['A320'] }; // grisé pour ce type (FR/RK en A320 = Lauda)
   var DOC_NOTES = { LIR_LAUDA:'A320 uniquement', LIR_RYANAIR:'B737 uniquement' }; // libellés choisis par Hugo
   function gateDocs(){
@@ -1360,7 +1361,7 @@ window.addEventListener('resize', function() {
         var cieOff = known && only.indexOf(cie) < 0;
         var typeOff = known && !cieOff && !!type && ((types && types.indexOf(type) < 0) || (notTypes && notTypes.indexOf(type) >= 0));
         var off = cieOff || typeOff;
-        var why = typeOff ? DOC_NOTES[b.dataset.doc] : (only.join('/') + ' uniquement');
+        var why = typeOff ? DOC_NOTES[b.dataset.doc] : (DOC_CIE_NOTES[b.dataset.doc] || (only.join('/') + ' uniquement'));
         if(off === b.disabled && (!off || b.dataset.why === why)) return;
         b.dataset.why = why;
         b.disabled = off;
