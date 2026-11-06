@@ -1345,7 +1345,7 @@ window.addEventListener('resize', function() {
   var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BINGO_FR:['FR','RK','V7','H4'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
   var CIE_KNOWN = ['FR','RK','W4','W6','V7','H4'];
   var DOC_TYPES = { LIR_LAUDA:['A320'] }; // type avion requis ; type vide = pas de blocage
-  var DOC_NOTES = { LIR_LAUDA:'FR A320 uniquement' }; // libellé choisi par Hugo
+  var DOC_NOTES = { LIR_LAUDA:'A320 uniquement' }; // libellé choisi par Hugo
   function gateDocs(){
     ['1','2'].forEach(function(n){
       var cie = (v('dep_flt_' + n) || v('arr_flt_' + n)).toUpperCase().replace(/\s/g,'').slice(0, 2);
