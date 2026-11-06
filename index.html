@@ -1340,22 +1340,27 @@ window.addEventListener('resize', function() {
   document.addEventListener('click', function(){ setTimeout(syncTabs, 60); }, true);
   syncTabs();
 
-  // ===== Documents par compagnie (Hugo) : LIR = FR/RK, Bingo = FR/RK/V7/H4, BBCG/Walkaround/RTB = W4/W6 =====
+  // ===== Documents par compagnie (Hugo) : LIR = FR/RK (Lauda : A320 seulement), Bingo = FR/RK/V7/H4, BBCG/Walkaround/RTB = W4/W6 =====
   // Code compagnie = 2 premiers caractères du n° de vol départ (sinon arrivée). Autre compagnie ou vide : tout reste actif.
   var DOC_CIES = { LIR_RYANAIR:['FR','RK'], LIR_LAUDA:['FR','RK'], BINGO_FR:['FR','RK','V7','H4'], BBCG_GATE:['W4','W6'], WAIF:['W4','W6'], RTB:['W4','W6'] };
   var CIE_KNOWN = ['FR','RK','W4','W6','V7','H4'];
+  var DOC_TYPES = { LIR_LAUDA:['A320'] }; // type avion requis ; type vide = pas de blocage
   function gateDocs(){
     ['1','2'].forEach(function(n){
       var cie = (v('dep_flt_' + n) || v('arr_flt_' + n)).toUpperCase().replace(/\s/g,'').slice(0, 2);
       var known = CIE_KNOWN.indexOf(cie) >= 0;
+      var type = v('dep_type_' + n) || v('arr_type_' + n);
       document.querySelectorAll('button[data-doc][data-vol="' + n + '"]').forEach(function(b){
         var only = DOC_CIES[b.dataset.doc];
         if(!only) return;
-        var off = known && only.indexOf(cie) < 0;
-        if(off === b.disabled) return;
+        var types = DOC_TYPES[b.dataset.doc];
+        var off = known && (only.indexOf(cie) < 0 || !!(types && type && types.indexOf(type) < 0));
+        var why = only.join('/') + (types ? ' ' + types.join('/') : '') + ' uniquement';
+        if(off === b.disabled && (!off || b.dataset.why === why)) return;
+        b.dataset.why = why;
         b.disabled = off;
         if(!b.dataset.label) b.dataset.label = b.textContent.trim();
-        if(off) b.innerHTML = '<span>' + b.dataset.label + '<small>' + only.join('/') + ' uniquement</small></span>';
+        if(off) b.innerHTML = '<span>' + b.dataset.label + '<small>' + why + '</small></span>';
         else b.textContent = b.dataset.label;
       });
     });
